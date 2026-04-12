@@ -20,7 +20,7 @@ TAKE_PROFIT_PERC = 0.04 # 4%
 
 SIMULACAO = False
 
-BASE_URL = "https://contract.mexc.com"
+BASE_URL = "BASE_URL = "https://api.mexc.com"
 
 em_posicao = False
 preco_entrada = 0

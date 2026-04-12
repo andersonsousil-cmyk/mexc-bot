@@ -1,1 +1,1 @@
-worker: python bot_mexc.py
+python mexc_bot_final_blindado.py

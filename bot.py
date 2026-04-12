@@ -6,8 +6,8 @@ import requests
 import pandas as pd
 
 # ================= CONFIG =================
-API_KEY = os.getenv("mx0vglWNrSu1aY9PBN")
-API_SECRET = os.getenv("04486ffae7984671b73e705c811b8e71")
+API_KEY = os.getenv("API_KEY")
+API_SECRET = os.getenv("API_SECRET")
 
 SYMBOL = "BTC_USDT"
 INTERVAL = "Min60"

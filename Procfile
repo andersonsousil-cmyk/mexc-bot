@@ -1,1 +1,0 @@
-python mexc_bot_blindado_v3.py

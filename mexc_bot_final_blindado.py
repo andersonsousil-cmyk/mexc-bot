@@ -1,6 +1,6 @@
 """
 BOT TELEGRAM MEXC - MONITORAMENTO AUTOMATICO DE SINAIS
-Versao Final Blindada: Texto Puro + Sensibilidade Ajustada (ADX 15, Conf 50%)
+Versao Blindada V3: Texto Bruto Total (Sem formatacao) + Sensibilidade Ajustada
 """
 
 import asyncio
@@ -56,7 +56,7 @@ class MexcMonitorBot:
         t_request = HTTPXRequest(connect_timeout=20, read_timeout=20)
         self.telegram = Bot(token=TELEGRAM_TOKEN, request=t_request)
 
-        print("🤖 Inicializando Bot MEXC Final Blindado...")
+        print("🤖 Inicializando Bot MEXC Blindado V3...")
         self._carregar_dados_historicos()
 
     def _carregar_dados_historicos(self):
@@ -170,11 +170,9 @@ class MexcMonitorBot:
         if agora - ultimo < INTERVALO_MIN_ALERTAS * 60: return
         self.last_alert[symbol][sinal] = agora
         
-        emoji = "🟢" if sinal == "COMPRA" else "🔴"
-        
-        # MENSAGEM EM TEXTO PURO (SEM HTML/MARKDOWN) PARA EVITAR ERROS DE PARSING NO TELEGRAM
-        # Removido o simbolo '$' para evitar erros de parsing
-        msg = f"{emoji} SINAL DE {sinal} - {symbol}\n"
+        # MENSAGEM EM TEXTO BRUTO TOTAL (SEM QUALQUER FORMATACAO)
+        # Removidos emojis complexos e simbolos especiais para evitar erros de parsing
+        msg = f"SINAL DE {sinal} - {symbol}\n"
         msg += f"Data: {datetime.now().strftime("%d/%m/%Y %H:%M")}\n\n"
         msg += f"ENTRADA: {price:.4f}\n"
         msg += f"TAKE PROFIT: {tp:.4f}\n"
@@ -187,8 +185,8 @@ class MexcMonitorBot:
         max_retries = 3
         for attempt in range(max_retries):
             try:
-                # REMOVIDO parse_mode PARA ENVIAR COMO TEXTO PURO E EVITAR ERROS DE PARSING
-                await self.telegram.send_message(chat_id=TELEGRAM_CHAT_ID, text=msg)
+                # FORCANDO O ENVIO SEM QUALQUER PARSE_MODE
+                await self.telegram.send_message(chat_id=TELEGRAM_CHAT_ID, text=msg, parse_mode=None)
                 print(f"📤 Alerta enviado: {symbol} - {sinal}")
                 break
             except RetryAfter as e:

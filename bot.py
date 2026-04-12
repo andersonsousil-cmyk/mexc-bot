@@ -1,3 +1,4 @@
+print("BOT INICIADO")
 import requests
 import time
 import random
